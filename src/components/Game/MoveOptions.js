@@ -1,14 +1,26 @@
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function MoveOptions(props) {
+  const [lastMoveIndex, setlastMoveIndex] = useState(-1);
+
+  useEffect(()=>{
+    setlastMoveIndex(-1);
+  }, [props.colors])
+
+  function handleMove(color, i) {
+    setlastMoveIndex(i);
+    props.handleMove(color);
+  }
+
   const colorOptions = props.colors.map((color, i) => {
-    return (
-      <TouchableOpacity
+    return (lastMoveIndex === i ?
+      (<View key={i} style={[styles.moveButton, { backgroundColor: color, opacity: 0.2 }]}/>)
+      : (<TouchableOpacity
         key={i}
-        onPress={() => props.handleMove(color)}
-        style={[styles.moveButton, { backgroundColor: color }] }/>
-    )
-  })
+        onPress={() => handleMove(color, i)}
+        style={[styles.moveButton, { backgroundColor: color }] }/>)
+    )})
 
   return (
     <View style={styles.container}>
