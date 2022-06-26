@@ -1,13 +1,14 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-web';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function MoveOptions(props) {
   const colorOptions = props.colors.map((color, i) => {
     return (
-      <View key={i} style={[styles.moveButton, { backgroundColor: color }] }/>
+      <TouchableOpacity
+        key={i}
+        onPress={() => props.handleMove(color)}
+        style={[styles.moveButton, { backgroundColor: color }] }/>
     )
   })
-
 
   return (
     <View style={styles.container}>
